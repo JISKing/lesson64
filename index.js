@@ -26,9 +26,11 @@ app.get('/', async (req, res) => {
     const customers = await Customer.find().populate('product_id');
     const output = customers.map((customer) => {
       const product = customer.product_id;
-      return `${customer.name}: ${product.title} Price:${product.price}`;
+      return `<div style="border: 1px solid #000; width: fit-content; margin: 0 0 20px 0; padding: 0 10px">
+      <span>${customer.name}:</span> <span style="padding: 0 10px">${customer.product_id.title}</span>  <span>Price: ${customer.product_id.price}</span>
+    </div>`;
     });
-    res.send(`Users purchases:\n${output.join('\n')}`);
+    res.send(`<h1>Users purchases:</h1>\n${output.join('\n')}`);
   } catch (error) {
     console.error('Error retrieving data:', error);
     res.status(500).send('Error retrieving data');
